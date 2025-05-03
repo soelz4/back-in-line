@@ -1,6 +1,8 @@
 import 'package:back_in_line/data/consts.dart';
 import 'package:back_in_line/data/notifiers.dart';
-import 'package:back_in_line/pages/welcome/welcome_page.dart';
+import 'package:back_in_line/data/reminder/reminder_manager.dart';
+import 'package:back_in_line/pages/splash_page.dart';
+import 'package:back_in_line/pages/welcome_page.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,10 +24,11 @@ class _MyAppState extends State<MyApp> {
   // initState
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _firstTimeOpen = _checkFirstTimeOpen();
     initThemeMode();
+    ReminderManager.loadReminders();
+    ReminderManager.loadSelectedReminder();
   }
 
   // initThemeMode
@@ -75,7 +78,7 @@ class _MyAppState extends State<MyApp> {
                 // After checking, show the appropriate page
                 return snapshot.data == true
                     ? const WelcomePage()
-                    : const WelcomePage();
+                    : const SplashPage();
               }
             },
           ),
